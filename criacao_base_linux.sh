@@ -1,15 +1,27 @@
 #!/bin/bash
 
-mkdir /publico adm ven sec
-chmod 770 adm ven sec 
-chmod 777 publico
+echo "Criando diretorios..."
+
+mkdir /publico /adm /ven /sec
+
+echo "Alterando Permissionamento..."
+
+chmod 770 /adm /ven /sec 
+chmod 777 /publico
+
+echo "Criando Grupos..."
 
 groupadd GRP_ADM
 groupadd GRP_VEN
 groupadd GRP_SEC
+
+echo "Alterando Configurações de proprietario do grupo..."
+
 chown root:GRP_ADM /adm/
-chmod root:GRP_VEN /ven/
-chmod root:GRP_SEC /sec/
+chown root:GRP_VEN /ven/
+chown root:GRP_SEC /sec/
+
+echo "Criando usuarios..."
 
 useradd carlos -m -c "Carlos Bavaro" -s /bin/bash -G GRP_ADM -p $(openssl passwd 0000)
 passwd carlos -e
@@ -29,3 +41,5 @@ useradd amanda -m -c "Amanda Cristina" -s /bin/bash -G GRP_SEC -p $(openssl pass
 passwd amanda -e
 useradd rogerio -m -c "Rogerio Cavalcante" -s /bin/bash -G GRP_SEC -p $(openssl passwd 0000)
 passwd rogerio -e
+
+echo "Finalizando..."
